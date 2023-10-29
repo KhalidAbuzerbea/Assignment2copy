@@ -114,6 +114,57 @@ public class ChatClient extends AbstractClient
         }
     }
     //JA
+    /**
+     * This method handles command from the client UI
+     *
+     * @param command The command from the UI.
+     */
+    // Changed for e50
+    private void handleCommand(String command) {
+        try {
+            switch (command.toLowerCase()) {
+                case "#quit":
+                    quit();
+                    break;
+                case "#logoff":
+                    closeConnection();
+                    break;
+                case "#login":
+                    if (!isConnected()) {
+                        openConnection();
+                    } else {
+                        clientUI.display("You are already connected.");
+                    }
+                    break;
+                case "#gethost":
+                    clientUI.display("Current host: " + getHost());
+                    break;
+                case "#getport":
+                    clientUI.display("Current port: " + getPort());
+                    break;
+                default:
+                    if (command.startsWith("#sethost ")) {
+                        if (!isConnected()) {
+                            setHost(command.substring(9));
+                        } else {
+                            clientUI.display("You must be logged off to set the host.");
+                        }
+                    } else if (command.startsWith("#setport ")) {
+                        if (!isConnected()) {
+                            setPort(Integer.parseInt(command.substring(9)));
+                        } else {
+                            clientUI.display("You must be logged off to set the port.");
+                        }
+                    } else {
+                        clientUI.display("Unknown command");
+                    }
+                    break;
+            }
+        } catch (IOException e) {
+            clientUI.display("An error occurred: " + e.getMessage());
+        }
+    }
+//KA
 
 
 }
