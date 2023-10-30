@@ -1,10 +1,13 @@
+
 import java.io.*;
 import ocsf.server.*;
 import java.util.Scanner;
+
+import common.ChatIF;
 // New class for E50 KA
-public class ServerConsole implements chatIF {
+public class ServerConsole implements ChatIF {
     // The default port to listen on.
-    final public static int DEFAULT_PORT = 5555;
+    final public static int DEFAULT_PORT = 354;
 
     // The instance of the server, used to perform different actions based on user input.
     EchoServer server;
